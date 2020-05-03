@@ -4,6 +4,7 @@ import lombok.Setter;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -18,16 +19,11 @@ public class Member {
     @Column(name = "name")
     private String username;
 
-    @Column
-    private String city;
+    @Embedded
+    private Address address;
 
-    @Column
-    private String street;
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    private List<Order> orders = new ArrayList<>();
 
-    @Column
-    private String zipCode;
-
-    @ManyToOne
-    private List<Order> orders;
 
 }

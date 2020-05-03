@@ -1,27 +1,33 @@
 package jpabook.jpashop.entity;
 
 
-import lombok.Generated;
+import jpabook.jpashop.entity.item.Item;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 
 @Getter
 @Setter
 @Entity
 public class OrderItem {
 
-    @Id @Generated
+    @Id @GeneratedValue
     @Column(name = "order_item_id")
     private Long id;
 
     @Column
-    private double orderPrice;
+    private int orderPrice; // 주문 가격
 
     @Column
-    private int count;
+    private int count; // 주문 수량
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "item_id")
+    private Item item;
 }
